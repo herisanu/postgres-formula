@@ -108,9 +108,10 @@ postgresql-pg_hba:
     # Create the empty file before managing to overcome the limitation of check_cmd
     - onlyif: test -f {{ pg_hba_path }} || touch {{ pg_hba_path }}
     # Make a local backup before the file modification
-    - check_cmd: >-
-        salt-call --local file.copy
-        {{ pg_hba_path }} {{ pg_hba_path ~ postgres.config_backup }} remove_existing=true
+# Temporary fix until 2017.7.1 is released
+#    - check_cmd: >-
+#        salt-call --local file.copy
+#        {{ pg_hba_path }} {{ pg_hba_path ~ postgres.config_backup }} remove_existing=true
   {%- endif %}
 {%- else %}
     - replace: False
